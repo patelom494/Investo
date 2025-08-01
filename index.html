@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SICS - Safe Investment & Capital Strategy</title>
+    <title>SICS - Shiv Investments & Consultancy Services</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -16,6 +16,9 @@
     
     <!-- AOS Animation -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <!-- Custom CSS -->
     <style>
@@ -122,13 +125,11 @@
             font-size: 3.5rem;
             font-weight: 700;
             margin-bottom: 20px;
-            animation: fadeInDown 1s ease;
         }
         
         .hero p {
             font-size: 1.5rem;
             margin-bottom: 30px;
-            animation: fadeInUp 1s ease;
         }
         
         .btn-custom {
@@ -139,7 +140,26 @@
             letter-spacing: 1px;
             transition: all 0.3s ease;
             margin: 5px;
-            animation: zoomIn 1s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-custom::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: -1;
+        }
+        
+        .btn-custom:hover::before {
+            transform: translateX(0);
         }
         
         .btn-primary-custom {
@@ -181,6 +201,7 @@
         /* Section Styles */
         section {
             padding: 80px 0;
+            position: relative;
         }
         
         .section-title {
@@ -210,6 +231,161 @@
             font-size: 1.1rem;
         }
         
+        /* Trading Strategy Section */
+        .trading-strategy {
+            background-color: white;
+        }
+        
+        .strategy-card {
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .strategy-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            transform: scaleY(0);
+            transition: transform 0.4s ease;
+            z-index: -1;
+        }
+        
+        .strategy-card:hover::before {
+            transform: scaleY(1);
+        }
+        
+        .strategy-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .strategy-card h3 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
+        }
+        
+        .strategy-card:hover h3 {
+            color: var(--primary);
+        }
+        
+        .strategy-card ul {
+            padding-left: 20px;
+        }
+        
+        .strategy-card li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .strategy-card li::before {
+            content: '•';
+            position: absolute;
+            left: -10px;
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .chart-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .chart-title {
+            text-align: center;
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .highlight-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: scale(0);
+            transition: transform 0.5s ease;
+        }
+        
+        .highlight-box:hover::before {
+            transform: scale(1);
+        }
+        
+        .highlight-box h3 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+        }
+        
+        .highlight-box p {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        
+        .highlight-box .big-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #f1c40f;
+            margin: 15px 0;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .highlight-box .big-number::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #f1c40f;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .highlight-box:hover .big-number::after {
+            transform: scaleX(1);
+        }
+        
         /* About Section */
         .about {
             background-color: white;
@@ -229,6 +405,24 @@
             overflow: hidden;
             border-radius: 10px;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease;
+        }
+        
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(26, 82, 118, 0.7), rgba(41, 128, 185, 0.7));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+        
+        .about-image:hover::before {
+            opacity: 1;
         }
         
         .about-image img {
@@ -257,16 +451,37 @@
             border-radius: 15px;
             padding: 30px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+            z-index: -1;
+        }
+        
+        .feature-card:hover::after {
+            transform: scaleX(1);
         }
         
         .feature-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-15px);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
         }
         
@@ -279,7 +494,7 @@
             justify-content: center;
             font-size: 2rem;
             margin-bottom: 20px;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
         }
         
         .feature-card:nth-child(1) .feature-icon {
@@ -298,7 +513,7 @@
         }
         
         .feature-card:hover .feature-icon {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(5deg);
         }
         
         .profit-sharing {
@@ -311,6 +526,7 @@
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
+            transition: all 0.3s ease;
         }
         
         .profit-sharing::before {
@@ -322,6 +538,11 @@
             height: 200px;
             border-radius: 50%;
             background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .profit-sharing:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
         
         .profit-sharing h3 {
@@ -339,6 +560,24 @@
             font-weight: 700;
             color: #f1c40f;
             margin: 20px 0;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .profit-sharing .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #f1c40f;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .profit-sharing:hover .highlight::after {
+            transform: scaleX(1);
         }
         
         /* Services Section */
@@ -357,29 +596,48 @@
             background-color: #f8f9fa;
             border-radius: 15px;
             padding: 30px;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             height: 100%;
-            border-left: 4px solid transparent;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            transform: translateY(-100%);
+            transition: transform 0.4s ease;
+            z-index: -1;
+        }
+        
+        .service-card:hover::before {
+            transform: translateY(0);
         }
         
         .service-card:nth-child(1) {
-            border-left-color: var(--danger);
+            border-left: 4px solid var(--danger);
         }
         
         .service-card:nth-child(2) {
-            border-left-color: var(--success);
+            border-left: 4px solid var(--success);
         }
         
         .service-card:nth-child(3) {
-            border-left-color: var(--accent);
+            border-left: 4px solid var(--accent);
         }
         
         .service-card:nth-child(4) {
-            border-left-color: var(--warning);
+            border-left: 4px solid var(--warning);
         }
         
         .service-card:nth-child(5) {
-            border-left-color: var(--info);
+            border-left: 4px solid var(--info);
         }
         
         .service-card:hover {
@@ -391,6 +649,7 @@
             font-size: 2.5rem;
             margin-bottom: 20px;
             display: inline-block;
+            transition: all 0.3s ease;
         }
         
         .service-card:nth-child(1) .service-icon {
@@ -413,6 +672,10 @@
             color: var(--info);
         }
         
+        .service-card:hover .service-icon {
+            transform: translateY(-5px) scale(1.1);
+        }
+        
         /* Why Choose Us */
         .why-choose {
             background-color: #f8f9fa;
@@ -430,10 +693,30 @@
             border-radius: 15px;
             padding: 30px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             height: 100%;
             display: flex;
             flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .benefit-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(52, 152, 219, 0.1) 0%, rgba(52, 152, 219, 0) 70%);
+            transform: scale(0);
+            transition: transform 0.5s ease;
+            z-index: -1;
+        }
+        
+        .benefit-card:hover::after {
+            transform: scale(3);
         }
         
         .benefit-card:hover {
@@ -452,6 +735,12 @@
             margin-bottom: 20px;
             background-color: rgba(52, 152, 219, 0.1);
             color: var(--accent);
+            transition: all 0.3s ease;
+        }
+        
+        .benefit-card:hover .benefit-icon {
+            transform: scale(1.1) rotate(5deg);
+            background-color: rgba(52, 152, 219, 0.2);
         }
         
         /* Founders Section */
@@ -468,11 +757,31 @@
         
         .founder-card {
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .founder-card::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: linear-gradient(135deg, rgba(26, 82, 118, 0.05), rgba(41, 128, 185, 0.05));
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+        
+        .founder-card:hover::before {
+            opacity: 1;
         }
         
         .founder-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-15px);
         }
         
         .founder-img {
@@ -484,6 +793,7 @@
             border: 5px solid var(--light);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             position: relative;
+            transition: all 0.5s ease;
         }
         
         .founder-img img {
@@ -574,16 +884,34 @@
             border-radius: 15px;
             padding: 30px;
             position: relative;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .testimonial-card:hover::before {
+            opacity: 1;
         }
         
         .testimonial-card:hover {
             transform: translateY(-10px);
             background-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         }
         
-        .testimonial-card::before {
-            content: """;
+        .testimonial-card::after {
+            content: "";
             position: absolute;
             top: 20px;
             left: 20px;
@@ -610,6 +938,11 @@
             overflow: hidden;
             margin-right: 15px;
             border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover .author-img {
+            transform: scale(1.1);
         }
         
         .author-img img {
@@ -644,6 +977,11 @@
             border-radius: 15px;
             padding: 40px;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-form:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
         
         .form-control {
@@ -667,6 +1005,26 @@
             padding: 12px 30px;
             font-weight: 600;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: -1;
+        }
+        
+        .btn-submit:hover::before {
+            transform: translateX(0);
         }
         
         .btn-submit:hover {
@@ -685,6 +1043,11 @@
             display: flex;
             align-items: center;
             margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            transform: translateX(10px);
         }
         
         .contact-icon {
@@ -699,6 +1062,11 @@
             font-size: 1.5rem;
             margin-right: 20px;
             flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover .contact-icon {
+            transform: scale(1.1) rotate(5deg);
         }
         
         .contact-text h4 {
@@ -770,11 +1138,28 @@
             color: #adb5bd;
             text-decoration: none;
             transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-links ul li a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
         }
         
         .footer-links ul li a:hover {
             color: white;
             padding-left: 5px;
+        }
+        
+        .footer-links ul li a:hover::before {
+            width: 100%;
         }
         
         .footer-social a {
@@ -878,40 +1263,6 @@
             }
         }
         
-        /* Loading Animation */
-        .loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
-        
-        .loader.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-        
-        .loader-circle {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid var(--accent);
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
         /* Back to Top Button */
         .back-to-top {
             position: fixed;
@@ -942,14 +1293,25 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
+        
+        /* Counter Animation */
+        .counter {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        /* Parallax Effect */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
     </style>
 </head>
 <body>
-    <!-- Loader -->
-    <div class="loader">
-        <div class="loader-circle"></div>
-    </div>
-    
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
@@ -966,6 +1328,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#about">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#trading-strategy">Trading Strategy</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#model">Our Model</a>
@@ -985,11 +1350,11 @@
     </nav>
     
     <!-- Hero Section -->
-    <section class="hero" id="home">
+    <section class="hero parallax" id="home">
         <div class="container">
-            <div class="hero-content text-center">
+            <div class="hero-content text-center" data-aos="fade-up">
                 <h1 class="mb-4">Secure Your Wealth. Share the Success.</h1>
-                <p class="lead mb-5">At SICS (Safe Investment & Capital Strategy), we believe in growing your wealth with safety, strategy, and shared success.</p>
+                <p class="lead mb-5">At SICS (Shiv Investments & Consultancy Services), we believe in growing your wealth with safety, strategy, and shared success.</p>
                 <div class="hero-buttons">
                     <a href="#contact" class="btn btn-custom btn-primary-custom">Start Investing Now</a>
                     <a href="#contact" class="btn btn-custom btn-outline-custom">Book Free Consultation</a>
@@ -1018,6 +1383,100 @@
                 </div>
                 <div class="about-image col-lg-6" data-aos="fade-left">
                     <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80" alt="Investment Strategy">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Trading Strategy Section -->
+    <section class="trading-strategy" id="trading-strategy">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title" data-aos="fade-up">Our Trading Strategy</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">A systematic approach to capital allocation and trading that maximizes returns while minimizing risk.</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="strategy-card" data-aos="fade-right" data-aos-delay="100">
+                        <h3><i class="fas fa-coins me-2"></i>Capital Allocation</h3>
+                        <p>Based on a capital of ₹50,00,000, we allocate funds as follows:</p>
+                        <ul>
+                            <li><strong>60% (₹30,00,000)</strong> invested in mutual fund portfolio</li>
+                            <li><strong>30% (₹15,00,000)</strong> invested in government securities and bonds</li>
+                            <li><strong>10% (₹5,00,000)</strong> held as cash for safety and liquidity</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="strategy-card" data-aos="fade-right" data-aos-delay="200">
+                        <h3><i class="fas fa-handshake me-2"></i>Portfolio Pledging</h3>
+                        <p>We pledge the investments to generate additional trading capital:</p>
+                        <ul>
+                            <li>Mutual funds (₹30,00,000) pledged to get <strong>₹24,00,000</strong> trading capital after haircut</li>
+                            <li>Government securities (₹15,00,000) pledged to get <strong>₹12,00,000</strong> trading capital after 20% haircut</li>
+                            <li>Cash reserve: <strong>₹5,00,000</strong></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="strategy-card" data-aos="fade-left" data-aos-delay="100">
+                        <h3><i class="fas fa-chart-line me-2"></i>Total Trading Capital</h3>
+                        <p>Our total trading capital amounts to:</p>
+                        <div class="text-center my-3">
+                            <div class="display-4 text-primary fw-bold">₹41,00,000</div>
+                            <p class="text-muted">₹24,00,000 + ₹12,00,000 + ₹5,00,000</p>
+                        </div>
+                    </div>
+                    
+                    <div class="strategy-card" data-aos="fade-left" data-aos-delay="200">
+                        <h3><i class="fas fa-exchange-alt me-2"></i>Trading Strategies</h3>
+                        <p>We deploy the following trading strategies with our capital:</p>
+                        <ul>
+                            <li><strong>Intraday Short Straddle</strong> with ₹20,00,000 capital</li>
+                            <li><strong>Positional Calendar Spread</strong> with ₹11,00,000 capital</li>
+                            <li><strong>Positional Short Strangle</strong> with ₹10,00,000 capital</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="highlight-box" data-aos="zoom-in" data-aos-delay="300">
+                <h3>Performance Metrics</h3>
+                <p>Our trading strategy consistently delivers:</p>
+                <div class="big-number">3-4% Monthly Returns</div>
+                <p>With disciplined risk management and systematic approach to trading</p>
+            </div>
+            
+            <div class="row mt-5">
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="chart-title">Initial Capital Allocation</div>
+                    <div class="chart-container">
+                        <canvas id="capitalAllocationChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="500">
+                    <div class="chart-title">Trading Capital Allocation</div>
+                    <div class="chart-container">
+                        <canvas id="tradingCapitalChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="600">
+                    <div class="chart-title">Monthly Profit (3-4%)</div>
+                    <div class="chart-container">
+                        <canvas id="monthlyProfitChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="700">
+                    <div class="chart-title">Capital Growth Over 5 Years</div>
+                    <div class="chart-container">
+                        <canvas id="capitalGrowthChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1181,7 +1640,7 @@
             <div class="founders-grid">
                 <div class="founder-card" data-aos="zoom-in" data-aos-delay="100">
                     <div class="founder-img">
-                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Patel Om">
+                        <img src="photos\WhatsApp Image 2025-05-22 at 4.15.37 PM.jpeg" alt="Patel Om">
                         <div class="founder-social">
                             <a href="#"><i class="fab fa-linkedin-in"></i></a>
                             <a href="#"><i class="fab fa-twitter"></i></a>
@@ -1194,7 +1653,7 @@
                 
                 <div class="founder-card" data-aos="zoom-in" data-aos-delay="200">
                     <div class="founder-img">
-                        <img src="https://images.unsplash.com/photo-1557862921-37829c790f19?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Patel Ayush">
+                        <img src="photos\WhatsApp Image 2025-08-01 at 11.10.19 PM.jpeg" alt="Patel Ayush">
                         <div class="founder-social">
                             <a href="#"><i class="fab fa-linkedin-in"></i></a>
                             <a href="#"><i class="fab fa-twitter"></i></a>
@@ -1232,7 +1691,7 @@
                         </div>
                         <div class="author-info">
                             <h4>Rajesh M.</h4>
-                            <p>Client since 2022</p>
+                            <p>Client since 2023</p>
                         </div>
                     </div>
                 </div>
@@ -1252,7 +1711,7 @@
                         </div>
                         <div class="author-info">
                             <h4>Priya K.</h4>
-                            <p>Client since 2021</p>
+                            <p>Client since 2023</p>
                         </div>
                     </div>
                 </div>
@@ -1318,7 +1777,7 @@
                                 <i class="fas fa-map-marker-alt"></i>
                             </div>
                             <div class="contact-text">
-                                <h4>Location</h4>
+                                <h4>Vadodara, Gujarat</h4>
                                 <p>Based in India | Working with clients globally</p>
                             </div>
                         </div>
@@ -1329,7 +1788,7 @@
                             </div>
                             <div class="contact-text">
                                 <h4>Phone</h4>
-                                <p><a href="tel:7572950954">7572950954</a></p>
+                                <p><a href="tel:7572950954">+91 7572950954</a></p>
                             </div>
                         </div>
                         
@@ -1357,7 +1816,7 @@
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="footer-about">
+                <div class="footer-about" data-aos="fade-up">
                     <div class="footer-logo">
                         <i class="fas fa-chart-line"></i> SICS
                     </div>
@@ -1370,18 +1829,18 @@
                     </div>
                 </div>
                 
-                <div class="footer-links">
+                <div class="footer-links" data-aos="fade-up" data-aos-delay="100">
                     <h4>Quick Links</h4>
                     <ul>
                         <li><a href="#home">Home</a></li>
                         <li><a href="#about">About Us</a></li>
+                        <li><a href="#trading-strategy">Trading Strategy</a></li>
                         <li><a href="#model">Our Model</a></li>
-                        <li><a href="#services">Services</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                 </div>
                 
-                <div class="footer-links">
+                <div class="footer-links" data-aos="fade-up" data-aos-delay="200">
                     <h4>Our Services</h4>
                     <ul>
                         <li><a href="#">Portfolio Creation</a></li>
@@ -1392,7 +1851,7 @@
                     </ul>
                 </div>
                 
-                <div class="footer-links">
+                <div class="footer-links" data-aos="fade-up" data-aos-delay="300">
                     <h4>Contact Us</h4>
                     <ul>
                         <li><i class="fas fa-map-marker-alt me-2"></i> Based in India</li>
@@ -1403,7 +1862,7 @@
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2023 SICS - Safe Investment & Capital Strategy. All rights reserved.</p>
+                <p>&copy; 2023 SICS - Shiv Investments & Consultancy Services. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -1423,13 +1882,6 @@
             duration: 1000,
             once: true,
             easing: 'ease-in-out'
-        });
-        
-        // Hide loader when page is loaded
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                document.querySelector('.loader').classList.add('hidden');
-            }, 500);
         });
         
         // Navbar background on scroll
@@ -1513,51 +1965,203 @@
             }
         });
         
-        // Add animation to numbers when they come into view
-        function animateNumbers() {
-            const numbers = document.querySelectorAll('.animate-number');
-            
-            numbers.forEach(number => {
-                const target = parseInt(number.getAttribute('data-target'));
-                const increment = target / 100;
-                let current = 0;
-                
-                const updateNumber = () => {
-                    current += increment;
-                    if (current < target) {
-                        number.textContent = Math.ceil(current);
-                        requestAnimationFrame(updateNumber);
-                    } else {
-                        number.textContent = target;
-                    }
-                };
-                
-                updateNumber();
-            });
-        }
-        
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-        
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animated');
-                    
-                    // If it's a number element, animate it
-                    if (entry.target.classList.contains('animate-number')) {
-                        animateNumbers();
+        // Capital Allocation Chart
+        const capitalAllocationCtx = document.getElementById('capitalAllocationChart').getContext('2d');
+        const capitalAllocationChart = new Chart(capitalAllocationCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Mutual Funds (60%)', 'Government Securities (30%)', 'Cash (10%)'],
+                datasets: [{
+                    data: [60, 30, 10],
+                    backgroundColor: [
+                        'rgba(52, 152, 219, 0.7)',
+                        'rgba(46, 204, 113, 0.7)',
+                        'rgba(241, 196, 15, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(52, 152, 219, 1)',
+                        'rgba(46, 204, 113, 1)',
+                        'rgba(241, 196, 15, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.raw || 0;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = Math.round((value / total) * 100);
+                                const amount = (value / 100) * 5000000;
+                                return `${label}: ₹${amount.toLocaleString('en-IN')} (${percentage}%)`;
+                            }
+                        }
                     }
                 }
-            });
-        }, observerOptions);
+            }
+        });
         
-        // Observe all elements with animation classes
-        document.querySelectorAll('.animate-on-scroll').forEach(el => {
-            observer.observe(el);
+        // Trading Capital Allocation Chart
+        const tradingCapitalCtx = document.getElementById('tradingCapitalChart').getContext('2d');
+        const tradingCapitalChart = new Chart(tradingCapitalCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Intraday Short Straddle', 'Positional Calendar Spread', 'Positional Short Strangle'],
+                datasets: [{
+                    data: [2000000, 1100000, 1000000],
+                    backgroundColor: [
+                        'rgba(231, 76, 60, 0.7)',
+                        'rgba(155, 89, 182, 0.7)',
+                        'rgba(26, 188, 156, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(231, 76, 60, 1)',
+                        'rgba(155, 89, 182, 1)',
+                        'rgba(26, 188, 156, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.raw || 0;
+                                return `${label}: ₹${value.toLocaleString('en-IN')}`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Monthly Profit Chart
+        const monthlyProfitCtx = document.getElementById('monthlyProfitChart').getContext('2d');
+        const monthlyProfitChart = new Chart(monthlyProfitCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Monthly Profit (%)',
+                    data: [3.2, 3.5, 3.8, 3.1, 3.6, 3.9, 3.4, 3.7, 3.3, 3.6, 3.8, 3.5],
+                    backgroundColor: 'rgba(46, 204, 113, 0.7)',
+                    borderColor: 'rgba(46, 204, 113, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 5,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Profit Percentage'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Month'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const value = context.raw || 0;
+                                const amount = (value / 100) * 4100000;
+                                return `Profit: ${value}% (₹${amount.toLocaleString('en-IN')})`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Capital Growth Chart
+        const capitalGrowthCtx = document.getElementById('capitalGrowthChart').getContext('2d');
+        const capitalGrowthChart = new Chart(capitalGrowthCtx, {
+            type: 'line',
+            data: {
+                labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                datasets: [{
+                    label: 'Capital Growth',
+                    data: [5000000, 6500000, 8450000, 10985000, 14280500],
+                    backgroundColor: 'rgba(52, 152, 219, 0.2)',
+                    borderColor: 'rgba(52, 152, 219, 1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgba(52, 152, 219, 1)',
+                    pointBorderColor: '#fff',
+                    pointRadius: 5,
+                    pointHoverRadius: 7,
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        ticks: {
+                            callback: function(value) {
+                                return '₹' + (value / 100000).toFixed(1) + 'L';
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Capital Amount'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Time Period'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const value = context.raw || 0;
+                                return `Capital: ₹${value.toLocaleString('en-IN')}`;
+                            }
+                        }
+                    }
+                }
+            }
         });
     </script>
 </body>
